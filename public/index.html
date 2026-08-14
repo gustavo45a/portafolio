@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustavo Enrique Ramos Ruiz — Portafolio Personal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    borderRadius: {
+                        '4xl': '2.25rem',
+                        '5xl': '3rem',
+                        '6xl': '3.75rem'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        pulseGlow: {
+                            '0%': { opacity: '0.3', filter: 'blur(20px)' },
+                            '100%': { opacity: '0.7', filter: 'blur(35px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --text-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 25px 55px rgba(0, 0, 0, 0.08);
+            --glass-hover-border: rgba(14, 165, 233, 0.5);
+        }
+
+        .dark {
+            --bg-color: #050811;
+            --text-color: #f8fafc;
+            --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            --glass-hover-border: rgba(255, 255, 255, 0.45);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .glass-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 2.5rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease, background 0.5s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-hover-border);
+            transform: translateY(-4px);
+        }
+
+        .glass-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .light .glass-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(203, 213, 225, 0.8);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -75%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: rotate(25deg);
+            transition: all 0.75s ease;
+        }
+
+        .glass-btn:hover::before {
+            left: 125%;
+        }
+
+        .glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.25);
+        }
+
+        .glass-btn-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            color: #ffffff !important;
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.4);
+        }
+
+        .glass-btn-primary:hover {
+            background: linear-gradient(135deg, #0369a1 0%, #6d28d9 100%);
+            box-shadow: 0 15px 40px rgba(2, 132, 199, 0.6);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .light .glass-input {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f172a;
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 20px rgba(2, 132, 199, 0.25);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 9999px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+
+        #welcome-splash {
+            perspective: 1000px;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.8s ease;
+        }
+
+        .splash-card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        #welcome-splash.zoom-out-splash {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+            pointer-events: none;
+        }
+
+        #welcome-splash.zoom-out-splash .splash-card-3d {
+            transform: perspective(1000px) translateZ(600px) scale(1.6) rotateX(10deg) !important;
+            opacity: 0;
+            transition: transform 0.75s cubic-bezier(0.7, 0, 0.84, 0), opacity 0.6s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans selection:bg-sky-500 selection:text-white">
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="glass-noise"></div>
+
+    <div id="welcome-splash" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/90 backdrop-blur-3xl text-center overflow-hidden">
+        <div id="interactive-splash-card" class="splash-card-3d max-w-2xl w-full glass-card p-10 md:p-14 rounded-5xl border border-white/30 shadow-2xl space-y-8 my-auto relative">
+            <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-to-tr from-sky-500 via-indigo-500 to-pink-500 rounded-full blur-3xl opacity-40 animate-pulse-glow pointer-events-none"></div>
+            <div class="relative w-36 h-36 mx-auto flex items-center justify-center">
+                <div class="w-full h-full glass-card rounded-full p-1.5 flex items-center justify-center border border-white/50 shadow-2xl relative z-10 overflow-hidden">
+                    <img src="48596.jpg" alt="Avatar Gustavo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%230284c7\'/><text x=\'50%\' y=\'55%\' font-size=\'40\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>G</text></svg>';">
+                </div>
+            </div>
+            <div class="space-y-3 relative z-10">
+                <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                    Bienvenido al Portafolio de <br/>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-300 via-indigo-200 to-pink-400">
+                        Gustavo Ramos Ruiz
+                    </span>
+                </h1>
+            </div>
+            <div class="relative z-10">
+                <button id="enter-portfolio-btn" class="glass-btn glass-btn-primary px-10 py-4.5 rounded-full text-sm font-extrabold tracking-wide uppercase shadow-2xl flex items-center gap-3 mx-auto group">
+                    <span>Entrar al Portafolio</span>
+                    <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-500 pointer-events-none">
+        <div class="glass-card px-6 py-4 rounded-3xl flex items-center gap-3 border border-white/30 shadow-2xl">
+            <div id="toast-icon" class="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-300">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h4 id="toast-title" class="font-bold text-sm">Éxito</h4>
+                <p id="toast-message" class="text-xs opacity-80">Operación realizada.</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="fixed top-5 left-0 right-0 z-40 px-4 md:px-8 max-w-6xl mx-auto">
+        <nav class="glass-card rounded-full px-6 py-3 flex items-center justify-between border border-white/20 shadow-xl">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-sky-400 via-indigo-500 to-amber-400 shadow-lg group-hover:scale-105 transition-transform overflow-hidden shrink-0">
+                    <img src="48596.jpg" alt="Foto Gustavo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%230284c7\'/><text x=\'50%\' y=\'55%\' font-size=\'40\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>G</text></svg>';">
+                </div>
+                <span class="font-bold text-lg tracking-tight group-hover:opacity-80 transition-opacity">
+                    Gustavo
+                </span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-1 bg-white/10 dark:bg-white/5 p-1.5 rounded-full border border-white/10 text-xs font-semibold">
+                <a href="#inicio" class="px-4 py-2 rounded-full hover:bg-white/20 transition-all">Inicio</a>
+                <a href="#sobre-mi" class="px-4 py-2 rounded-full hover:bg-white/20 transition-all">Sobre mí</a>
+                <a href="#modulo-vision" class="px-4 py-2 rounded-full text-sky-400 font-bold hover:bg-white/20 transition-all">Visión / IA</a>
+                <a href="#trayectoria" class="px-4 py-2 rounded-full hover:bg-white/20 transition-all">Trayectoria</a>
+                <a href="#proyectos" class="px-4 py-2 rounded-full hover:bg-white/20 transition-all">Proyectos</a>
+                <a href="#terminal" class="px-4 py-2 rounded-full text-purple-400 font-bold hover:bg-white/20 transition-all">Kernel OS</a>
+                <a href="#contacto" class="px-4 py-2 rounded-full hover:bg-white/20 transition-all">Contacto</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="theme-toggle-btn" title="Alternar entre Modo Oscuro y Modo Claro" class="glass-btn p-2.5 rounded-full flex items-center justify-center">
+                    <i data-lucide="sun" class="w-4 h-4 text-amber-300 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 text-indigo-600 block dark:hidden"></i>
+                </button>
+
+                <button id="sound-toggle-btn" title="Activar/Desactivar efectos de sonido" class="glass-btn p-2.5 rounded-full flex items-center justify-center">
+                    <i data-lucide="volume-2" class="w-4 h-4 text-sky-400"></i>
+                </button>
+
+                <button id="regen-bg-btn" title="Generar un nuevo fondo procedural aleatorio" class="glass-btn p-2.5 rounded-full flex items-center justify-center">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-pink-400 animate-pulse"></i>
+                </button>
+
+                <a href="#contacto" class="glass-btn glass-btn-primary px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+                    <span>Contacto</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+
+                <button id="mobile-menu-btn" class="lg:hidden glass-btn p-2.5 rounded-full">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-card rounded-4xl p-6 border border-white/20 shadow-2xl space-y-2">
+            <a href="#inicio" class="mobile-link block px-4 py-2.5 rounded-2xl hover:bg-white/10 font-medium">Inicio</a>
+            <a href="#sobre-mi" class="mobile-link block px-4 py-2.5 rounded-2xl hover:bg-white/10 font-medium">Sobre mí</a>
+            <a href="#modulo-vision" class="mobile-link block px-4 py-2.5 rounded-2xl text-sky-400 font-bold hover:bg-white/10 font-medium">Visión / IA</a>
+            <a href="#trayectoria" class="mobile-link block px-4 py-2.5 rounded-2xl hover:bg-white/10 font-medium">Trayectoria</a>
+            <a href="#proyectos" class="mobile-link block px-4 py-2.5 rounded-2xl hover:bg-white/10 font-medium">Proyectos</a>
+            <a href="#terminal" class="mobile-link block px-4 py-2.5 rounded-2xl text-purple-400 font-bold hover:bg-white/10 font-medium">Kernel OS</a>
+            <a href="#contacto" class="mobile-link block px-4 py-2.5 rounded-2xl hover:bg-white/10 font-medium">Contacto</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 md:px-8 pt-32 pb-24 space-y-32">
+
+        <section id="inicio" class="min-h-[85vh] flex flex-col justify-center items-center text-center relative pt-8">
+            <div class="relative mb-6 group">
+                <div class="w-36 h-36 md:w-44 md:h-44 rounded-full p-1 bg-gradient-to-tr from-amber-400 via-pink-500 to-sky-500 shadow-2xl animate-float">
+                    <img src="48596.jpg" alt="Gustavo Ramos" class="w-full h-full object-cover rounded-full border-2 border-white/50 shadow-inner group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%230284c7\'/><text x=\'50%\' y=\'55%\' font-size=\'40\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>G</text></svg>';">
+                </div>
+                <div class="absolute -bottom-2 -right-2 glass-card px-4 py-1.5 rounded-full text-xs font-bold text-amber-400 border border-amber-400/40 shadow-xl flex items-center gap-1.5">
+                    <span>🐾 Furry & Dev</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
+                <div class="glass-card px-5 py-2.5 rounded-full border border-white/30 text-xs md:text-sm font-medium text-sky-400 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>14 años · Villahermosa, Tabasco, México</span>
+                </div>
+                <div class="glass-card px-5 py-2.5 rounded-full border border-pink-500/30 text-xs font-semibold text-pink-400 flex items-center gap-1.5">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 fill-pink-400"></i>
+                    <span>Dato curioso: Es furry y tiene el mejor corazón</span>
+                </div>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-6 max-w-5xl">
+                Gustavo Enrique <br class="hidden sm:inline"/>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-300 to-pink-500">
+                    Ramos Ruiz
+                </span>
+            </h1>
+
+            <p class="text-base sm:text-xl font-light leading-relaxed mb-10 max-w-3xl opacity-90">
+                Programando desde los <strong class="font-semibold">6 años</strong>. Arquitectura de bajo nivel (<span class="text-sky-400 font-medium">Rust, C, C++, Bare-Metal</span>), desarrollo de kernels, redes y modelos propios de <strong class="text-indigo-400">Inteligencia Artificial & Visión</strong>.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <a href="#proyectos" class="glass-btn glass-btn-primary px-8 py-4.5 rounded-full text-base font-bold flex items-center justify-center gap-3 w-full sm:w-auto group">
+                    <i data-lucide="cpu" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+                    <span>Explorar Proyectos</span>
+                </a>
+                <a href="#modulo-vision" class="glass-btn px-8 py-4.5 rounded-full text-base font-semibold flex items-center justify-center gap-3 w-full sm:w-auto">
+                    <i data-lucide="eye" class="w-5 h-5 text-amber-400"></i>
+                    <span>Módulo Visión Groq</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mt-16">
+                <div class="glass-card p-6 rounded-4xl text-center">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-1">8+</h3>
+                    <p class="text-xs uppercase tracking-wider font-medium opacity-70">Años Programando</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl text-center">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-1">5</h3>
+                    <p class="text-xs uppercase tracking-wider font-medium opacity-70">Lenguajes Core</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl text-center">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-1">2</h3>
+                    <p class="text-xs uppercase tracking-wider font-medium opacity-70">Kernel & Red Propia</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl text-center">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-1">Groq</h3>
+                    <p class="text-xs uppercase tracking-wider font-medium opacity-70">LPU Visión & Text</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre-mi" class="space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs uppercase tracking-widest text-sky-400 font-bold">Biografía Técnica</h2>
+                <h3 class="text-3xl sm:text-5xl font-black">Apasionado por Hardware, Bajo Nivel e IA</h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div class="lg:col-span-5 glass-card p-8 md:p-10 rounded-5xl flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 rounded-3xl p-0.5 bg-gradient-to-tr from-amber-400 via-pink-500 to-sky-500 shadow-xl overflow-hidden shrink-0">
+                                <img src="48596.jpg" alt="Foto Gustavo" class="w-full h-full object-cover rounded-[22px]" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%230284c7\'/><text x=\'50%\' y=\'55%\' font-size=\'40\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>G</text></svg>';">
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold">Gustavo Enrique Ramos Ruiz</h4>
+                                <p class="text-sky-400 text-xs font-medium">14 años · Villahermosa, Tabasco</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4.5 rounded-3xl glass-card bg-pink-500/10 border border-pink-500/30 flex items-center gap-3">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-pink-400 shrink-0"></i>
+                            <p class="text-xs font-medium text-pink-300">
+                                <strong>Dato curioso:</strong> Es furry y tiene el mejor corazón. 🐾❤️
+                            </p>
+                        </div>
+
+                        <p class="text-sm leading-relaxed font-light opacity-90">
+                            Mi pasión radica en entender cómo funcionan las cosas desde sus cimientos. No solo creo interfaces con React o apps con Flutter: también desarrollo mi propio <strong>Kernel de Sistema Operativo</strong>, construyo mi propia <strong>Red de Internet</strong> y entreno <strong>Modelos de Inteligencia Artificial & Visión</strong>. Tengo un dominio especial para <i>trasladar y plasmar las ideas de las personas directamente hacia soluciones efectivas con IA</i>.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10 space-y-3">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2">
+                            <i data-lucide="languages" class="w-4 h-4"></i>
+                            <span>Idiomas</span>
+                        </h5>
+                        
+                        <div class="space-y-2.5 text-xs">
+                            <div>
+                                <div class="flex justify-between mb-1 opacity-90">
+                                    <span>Español</span>
+                                    <span class="text-emerald-400 font-bold">Nativo (100%)</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-700/30 rounded-full overflow-hidden">
+                                    <div class="h-full bg-emerald-400 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1 opacity-90">
+                                    <span>Inglés</span>
+                                    <span class="text-sky-400 font-bold">En aprendizaje (~50%)</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-700/30 rounded-full overflow-hidden">
+                                    <div class="h-full bg-sky-400 rounded-full" style="width: 50%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-1 opacity-90">
+                                    <span>Francés</span>
+                                    <span class="text-indigo-400 font-bold">Básico (20%)</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-700/30 rounded-full overflow-hidden">
+                                    <div class="h-full bg-indigo-400 rounded-full" style="width: 20%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10 space-y-2 text-xs opacity-80">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
+                            <span>Villahermosa, Tabasco, México</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4 text-sky-400"></i>
+                            <span>evelynasgo@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 glass-card p-8 md:p-10 rounded-5xl space-y-6">
+                    <h4 class="text-xl font-bold flex items-center gap-2">
+                        <i data-lucide="code-2" class="w-5 h-5 text-sky-400"></i>
+                        <span>Lenguajes & Herramientas Dominadas</span>
+                    </h4>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-amber-400/50 transition-all">
+                            <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 inline-block">
+                                <i data-lucide="shield" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">Rust</h5>
+                            <p class="text-xs opacity-70">Low-Level & Kernel</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-blue-400/50 transition-all">
+                            <div class="p-3 bg-blue-500/10 rounded-2xl text-blue-400 inline-block">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">C / C++</h5>
+                            <p class="text-xs opacity-70">Bare-Metal & Sistemas</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-yellow-400/50 transition-all">
+                            <div class="p-3 bg-yellow-500/10 rounded-2xl text-yellow-400 inline-block">
+                                <i data-lucide="file-code" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">Python</h5>
+                            <p class="text-xs opacity-70">Avanzado & Bare-Metal</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-sky-400/50 transition-all">
+                            <div class="p-3 bg-sky-500/10 rounded-2xl text-sky-400 inline-block">
+                                <i data-lucide="atom" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">React</h5>
+                            <p class="text-xs opacity-70">Desarrollo Web UI</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-cyan-400/50 transition-all">
+                            <div class="p-3 bg-cyan-500/10 rounded-2xl text-cyan-400 inline-block">
+                                <i data-lucide="smartphone" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">Flutter</h5>
+                            <p class="text-xs opacity-70">Android & Windows Hub</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-3xl text-center space-y-2 hover:border-purple-400/50 transition-all">
+                            <div class="p-3 bg-purple-500/10 rounded-2xl text-purple-400 inline-block">
+                                <i data-lucide="eye" class="w-6 h-6"></i>
+                            </div>
+                            <h5 class="font-semibold text-sm">Groq Vision</h5>
+                            <p class="text-xs opacity-70">Multimodal Inferencia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modulo-vision" class="space-y-8">
+            <div class="glass-card p-8 md:p-10 rounded-5xl border border-sky-500/30 shadow-2xl relative overflow-hidden">
+                <div class="max-w-3xl space-y-4 relative z-10">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center gap-1.5 shadow-md">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                            <span>Módulo de Visión & Inferencia con Groq API</span>
+                        </span>
+                        <span class="text-xs font-bold font-mono px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                            Endpoint Backend Seguro
+                        </span>
+                    </div>
+
+                    <h3 class="text-3xl sm:text-5xl font-black">Analizador Multimodal & Visión en Tiempo Real</h3>
+                    <p class="text-sm font-light leading-relaxed opacity-90">
+                        Prueba la potencia de inferencia. Puedes escribir una idea conceptual o cargar/arrastrar una imagen para analizarla con el modelo de visión de Groq.
+                    </p>
+                </div>
+
+                <div class="mt-8 relative z-10 space-y-6">
+                    <div class="flex items-center gap-3 border-b border-white/10 pb-3">
+                        <button id="mode-text-btn" class="px-5 py-3 rounded-2xl text-xs font-bold bg-sky-500 text-white flex items-center gap-2 shadow-lg transition-all">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            <span>Ideas ➔ IA (Texto)</span>
+                        </button>
+                        <button id="mode-vision-btn" class="px-5 py-3 rounded-2xl text-xs font-bold bg-white/10 opacity-70 hover:opacity-100 flex items-center gap-2 transition-all">
+                            <i data-lucide="image" class="w-4 h-4"></i>
+                            <span>Módulo de Visión (Imágenes)</span>
+                        </button>
+                    </div>
+
+                    <div id="panel-text-mode" class="space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input id="idea-input" type="text" placeholder="Ejemplo: Una app que traduzca código C++ a Rust de forma automática..." class="w-full glass-input px-6 py-4 rounded-3xl text-sm">
+                            <button id="translate-idea-btn" class="glass-btn glass-btn-primary px-8 py-4 rounded-3xl text-sm font-bold shrink-0 flex items-center justify-center gap-2">
+                                <i data-lucide="zap" class="w-4 h-4 text-amber-300"></i>
+                                <span>Procesar Idea</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="panel-vision-mode" class="hidden space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                            <div class="md:col-span-8 space-y-3">
+                                <label class="block text-xs font-semibold opacity-80">Selecciona o arrastra una imagen para el Módulo de Visión:</label>
+                                <input id="vision-file-input" type="file" accept="image/*" class="w-full glass-input px-4 py-3 rounded-3xl text-xs file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-xs file:font-semibold file:bg-sky-500 file:text-white hover:file:bg-sky-600">
+                                <input id="vision-prompt-input" type="text" placeholder="¿Qué deseas que analice la IA de esta imagen? (Opcional)" class="w-full glass-input px-6 py-3.5 rounded-3xl text-sm">
+                            </div>
+                            <div class="md:col-span-4 flex flex-col justify-center items-center">
+                                <div id="image-preview-container" class="w-32 h-32 rounded-3xl border border-white/20 overflow-hidden glass-card flex items-center justify-center text-xs opacity-60">
+                                    <span>Vista Previa</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="process-vision-btn" class="glass-btn glass-btn-primary w-full py-4 rounded-3xl text-sm font-bold flex items-center justify-center gap-2">
+                            <i data-lucide="eye" class="w-4 h-4 text-amber-300"></i>
+                            <span>Ejecutar Visión por Computadora con Groq</span>
+                        </button>
+                    </div>
+
+                    <div id="ai-loader" class="hidden text-center py-6 space-y-3">
+                        <div class="w-8 h-8 border-4 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p id="loader-text" class="text-xs text-sky-400 font-mono">Conectando a API vía LPU... Procesando inferencia...</p>
+                    </div>
+
+                    <div id="idea-result" class="hidden glass-card p-6 rounded-4xl bg-slate-950/80 border border-white/20 space-y-4 text-white">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                            <span class="text-xs font-bold text-emerald-400 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                <span>Inferencia Realizada por Groq Cloud</span>
+                            </span>
+                            <span id="model-badge" class="text-xs text-sky-400 font-mono">Model: Groq LPU</span>
+                        </div>
+                        <div class="space-y-3 font-mono text-xs leading-relaxed">
+                            <p><strong class="text-sky-400">🔍 Entrada:</strong> <span id="out-idea" class="text-slate-300"></span></p>
+                            <p><strong class="text-amber-400">🧠 Respuesta del Modelo:</strong></p>
+                            <pre id="out-prompt" class="p-4 rounded-3xl bg-black/70 text-emerald-400 border border-white/10 whitespace-pre-wrap font-mono max-h-[350px] overflow-y-auto"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trayectoria" class="space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs uppercase tracking-widest text-sky-400 font-bold">Historia de Aprendizaje</h2>
+                <h3 class="text-3xl sm:text-5xl font-black">Evolución Desde los 6 Años</h3>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6 relative before:absolute before:inset-0 before:left-8 md:before:left-1/2 before:-ml-px before:w-0.5 before:bg-gradient-to-b before:from-sky-500 before:via-indigo-500 before:to-purple-500">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 text-slate-950 font-bold shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 border-4 border-slate-900 z-10">
+                        <i data-lucide="cpu" class="w-4 h-4"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-card p-6 rounded-4xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-400">Inicio a los 6 Años</span>
+                            <span class="text-xs opacity-60">Primeros Pasos</span>
+                        </div>
+                        <h4 class="text-lg font-bold">Arduino Uno & Circuitos</h4>
+                        <p class="text-xs font-light leading-relaxed opacity-80">
+                            Comencé mi camino en la programación con microcontroladores interactivos, sensores y electrónica práctica.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-slate-950 font-bold shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 border-4 border-slate-900 z-10">
+                        <i data-lucide="layout" class="w-4 h-4"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-card p-6 rounded-4xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-sky-400">React & Ecosistema Web</span>
+                            <span class="text-xs opacity-60">2023 — 2024</span>
+                        </div>
+                        <h4 class="text-lg font-bold">Frontend & Aplicaciones Web</h4>
+                        <p class="text-xs font-light leading-relaxed opacity-80">
+                            Desarrollo de portales y aplicaciones con React, JavaScript/TypeScript e interfaces responsivas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-500 text-white font-bold shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 border-4 border-slate-900 z-10">
+                        <i data-lucide="bot" class="w-4 h-4"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-card p-6 rounded-4xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-indigo-400">Python & Herramientas IA</span>
+                            <span class="text-xs opacity-60">2024 — 2025</span>
+                        </div>
+                        <h4 class="text-lg font-bold">Integración de Inteligencia Artificial</h4>
+                        <p class="text-xs font-light leading-relaxed opacity-80">
+                            Dominio de Python avanzado, automatización y traducción de requerimientos humanos a agentes de IA.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 text-white font-bold shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 border-4 border-slate-900 z-10">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-card p-6 rounded-4xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-purple-400">Rust, Bare-Metal & Kernel</span>
+                            <span class="text-xs opacity-60">2025 — Presente</span>
+                        </div>
+                        <h4 class="text-lg font-bold">Sistemas Operativos, Redes & Modelos</h4>
+                        <p class="text-xs font-light leading-relaxed opacity-80">
+                            Desarrollo de Kernel propio, creación de protocolo de red e entrenamiento de modelo propio de IA.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyectos" class="space-y-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h2 class="text-xs uppercase tracking-widest text-sky-400 font-bold mb-2">Desarrollos Insignia</h2>
+                    <h3 class="text-3xl sm:text-5xl font-black">Proyectos Principales</h3>
+                </div>
+
+                <div class="flex items-center gap-2 p-1.5 glass-card rounded-full self-start md:self-auto overflow-x-auto max-w-full">
+                    <button class="filter-btn active px-5 py-2 rounded-full text-xs font-bold bg-sky-500 text-white shadow-md transition-all" data-filter="all">Todos</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-xs font-bold opacity-70 hover:opacity-100 transition-all" data-filter="ia">IA & Models</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-xs font-bold opacity-70 hover:opacity-100 transition-all" data-filter="systems">Bajo Nivel / Systems</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="projects-container">
+                <div class="project-card glass-card rounded-5xl overflow-hidden group border border-white/20" data-category="ia">
+                    <div class="h-60 bg-gradient-to-br from-indigo-900/80 to-purple-900/80 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="relative z-10 glass-card px-6 py-4 rounded-3xl text-center text-white">
+                            <i data-lucide="smartphone" class="w-10 h-10 text-sky-400 mx-auto mb-2"></i>
+                            <span class="text-xs font-bold uppercase tracking-wider">Casi Terminado</span>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30">Flutter (Android & Windows)</span>
+                            <span class="text-xs opacity-60">2026</span>
+                        </div>
+                        <h4 class="text-2xl font-bold group-hover:text-sky-400 transition-colors">Local AI Hub Multiplataforma</h4>
+                        <p class="text-sm font-light leading-relaxed opacity-80">
+                            Hub de IA local diseñado en Flutter para ejecutar modelos directamente en Windows y Android sin servidores en la nube.
+                        </p>
+                        <div class="pt-4 flex items-center justify-between border-t border-white/10">
+                            <button class="open-modal-btn glass-btn px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2" data-id="1">
+                                <span>Ver Detalle</span>
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> 90% Avance
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-card rounded-5xl overflow-hidden group border border-white/20" data-category="ia">
+                    <div class="h-60 bg-gradient-to-br from-purple-900/80 to-pink-900/80 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="relative z-10 glass-card px-6 py-4 rounded-3xl text-center text-white">
+                            <i data-lucide="brain" class="w-10 h-10 text-pink-400 mx-auto mb-2"></i>
+                            <span class="text-xs font-bold uppercase tracking-wider">Entrenamiento</span>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-pink-500/20 text-pink-400 border border-pink-400/30">Python & AI Training</span>
+                            <span class="text-xs opacity-60">2026</span>
+                        </div>
+                        <h4 class="text-2xl font-bold group-hover:text-pink-400 transition-colors">Modelo de IA Personalizado</h4>
+                        <p class="text-sm font-light leading-relaxed opacity-80">
+                            Desarrollo y entrenamiento de un modelo propio optimizado para compresión de datos e inferencia ultra rápida.
+                        </p>
+                        <div class="pt-4 flex items-center justify-between border-t border-white/10">
+                            <button class="open-modal-btn glass-btn px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2" data-id="2">
+                                <span>Ver Detalle</span>
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-purple-400 font-semibold">Casi Listo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-card rounded-5xl overflow-hidden group border border-white/20" data-category="systems">
+                    <div class="h-60 bg-gradient-to-br from-amber-900/80 to-red-900/80 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="relative z-10 glass-card px-6 py-4 rounded-3xl text-center text-white">
+                            <i data-lucide="cpu" class="w-10 h-10 text-amber-400 mx-auto mb-2"></i>
+                            <span class="text-xs font-bold uppercase tracking-wider">En Construcción</span>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-400/30">Rust / C / Bare-Metal</span>
+                            <span class="text-xs opacity-60">2026</span>
+                        </div>
+                        <h4 class="text-2xl font-bold group-hover:text-amber-400 transition-colors">Kernel de Sistema Operativo</h4>
+                        <p class="text-sm font-light leading-relaxed opacity-80">
+                            Núcleo de sistema operativo escrito en C, C++ y Rust. Gestión de memoria e interrupciones de hardware.
+                        </p>
+                        <div class="pt-4 flex items-center justify-between border-t border-white/10">
+                            <button class="open-modal-btn glass-btn px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2" data-id="3">
+                                <span>Ver Detalle</span>
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-amber-400 font-semibold">En Desarrollo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-card rounded-5xl overflow-hidden group border border-white/20" data-category="systems">
+                    <div class="h-60 bg-gradient-to-br from-emerald-900/80 to-teal-900/80 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="relative z-10 glass-card px-6 py-4 rounded-3xl text-center text-white">
+                            <i data-lucide="network" class="w-10 h-10 text-emerald-400 mx-auto mb-2"></i>
+                            <span class="text-xs font-bold uppercase tracking-wider">En Construcción</span>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/30">Networking / C++</span>
+                            <span class="text-xs opacity-60">2026</span>
+                        </div>
+                        <h4 class="text-2xl font-bold group-hover:text-emerald-400 transition-colors">Red de Internet & Protocolos</h4>
+                        <p class="text-sm font-light leading-relaxed opacity-80">
+                            Arquitectura y protocolos de comunicación propios para transmisión cifrada descentralizada.
+                        </p>
+                        <div class="pt-4 flex items-center justify-between border-t border-white/10">
+                            <button class="open-modal-btn glass-btn px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2" data-id="4">
+                                <span>Ver Detalle</span>
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-emerald-400 font-semibold">En Desarrollo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="terminal" class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs uppercase tracking-widest text-purple-400 font-bold">Experiencia Bare-Metal</h2>
+                <h3 class="text-3xl sm:text-5xl font-black">Consola Kernel OS</h3>
+                <p class="text-sm font-light opacity-80">Escribe comandos en tiempo real. Prueba: <code class="text-sky-400 font-mono">help</code>, <code class="text-sky-400 font-mono">whoami</code>, <code class="text-sky-400 font-mono">projects</code>, <code class="text-sky-400 font-mono">furry</code> o <code class="text-sky-400 font-mono">clear</code>.</p>
+            </div>
+
+            <div class="glass-card rounded-5xl p-8 font-mono text-xs sm:text-sm bg-slate-950/95 text-white border border-purple-500/30 shadow-2xl max-w-4xl mx-auto space-y-4">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3.5 h-3.5 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-green-500 inline-block"></span>
+                        <span class="text-slate-400 text-xs ml-2">gustavo-kernel-v0.1.0-baremetal</span>
+                    </div>
+                    <span class="text-purple-400 text-xs font-bold">Rust/C Execution</span>
+                </div>
+
+                <div id="terminal-body" class="space-y-3 min-h-[200px] max-h-[300px] overflow-y-auto text-slate-300">
+                    <p class="text-emerald-400">Gustavo Kernel v0.1.0-alpha [x86_64] listo.</p>
+                    <p class="text-slate-400">Escribe '<span class="text-amber-400 font-bold">help</span>' para ver los comandos.</p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 border-t border-white/10 text-sky-400">
+                    <span class="text-pink-400 font-bold">gustavo@kernel:~$</span>
+                    <input id="terminal-input" type="text" class="bg-transparent border-none outline-none text-white w-full font-mono text-xs sm:text-sm" placeholder="Escribe un comando...">
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs uppercase tracking-widest text-sky-400 font-bold">Mis Canales</h2>
+                <h3 class="text-3xl sm:text-5xl font-black">¿Tienes una idea? La plasmamos en IA</h3>
+                <p class="text-sm font-light opacity-80">Escríbeme para colaborar en software de alto nivel, proyectos en Rust o Inteligencia Artificial.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-card p-6 rounded-4xl space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 rounded-2xl bg-sky-500/20 text-sky-400">
+                                <i data-lucide="mail" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs opacity-60 font-medium">Correo Electrónico</p>
+                                <p class="text-sm font-bold">evelynasgo@gmail.com</p>
+                            </div>
+                        </div>
+                        <button id="copy-email-btn" class="glass-btn w-full py-3 rounded-2xl text-xs font-bold flex items-center justify-center gap-2">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>Copiar evelynasgo@gmail.com</span>
+                        </button>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-4xl space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                                <i data-lucide="message-square" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs opacity-60 font-medium">WhatsApp Directo</p>
+                                <p class="text-sm font-bold">+52 993 121 8430</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/529931218430" target="_blank" class="glass-btn w-full py-3 rounded-2xl text-xs font-bold text-emerald-400 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Abrir Chat WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-4xl space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 rounded-2xl bg-indigo-500/20 text-indigo-400">
+                                <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs opacity-60 font-medium">Discord</p>
+                                <p class="text-sm font-bold">gustavo125930</p>
+                            </div>
+                        </div>
+                        <button id="copy-discord-btn" class="glass-btn w-full py-3 rounded-2xl text-xs font-bold text-indigo-400 flex items-center justify-center gap-2">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>Copiar usuario Discord</span>
+                        </button>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-4xl space-y-3">
+                        <p class="text-xs opacity-60 font-medium">Repositorios Oficiales</p>
+                        <a href="https://github.com/gustavo45a" target="_blank" class="p-3 glass-btn rounded-2xl hover:text-sky-400 flex items-center justify-center gap-2 w-full font-semibold text-xs">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                            <span>GitHub: gustavo45a</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 glass-card p-8 md:p-10 rounded-5xl">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold opacity-80">Nombre</label>
+                                <input type="text" required placeholder="Tu nombre" class="w-full glass-input px-5 py-4 rounded-3xl text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold opacity-80">Email</label>
+                                <input type="email" required placeholder="tu@email.com" class="w-full glass-input px-5 py-4 rounded-3xl text-sm">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold opacity-80">Idea o Proyecto</label>
+                            <input type="text" required placeholder="Ej. Plasmar una idea en IA / Proyecto Rust" class="w-full glass-input px-5 py-4 rounded-3xl text-sm">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold opacity-80">Mensaje</label>
+                            <textarea rows="4" required placeholder="Cuéntame sobre tu propuesta..." class="w-full glass-input px-5 py-4 rounded-3xl text-sm"></textarea>
+                        </div>
+
+                        <button type="submit" class="glass-btn glass-btn-primary w-full py-4.5 rounded-full text-sm font-bold flex items-center justify-center gap-2 group">
+                            <span>Enviar Mensaje</span>
+                            <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-card max-w-2xl w-full p-8 rounded-5xl border border-white/30 shadow-2xl relative transform scale-95 transition-all duration-300 space-y-6">
+            <button id="close-modal" class="absolute top-6 right-6 p-2 rounded-full glass-btn">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="space-y-3">
+                <span id="modal-tag" class="text-xs font-bold px-3.5 py-1.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30">Categoría</span>
+                <h3 id="modal-title" class="text-3xl font-black">Proyecto</h3>
+            </div>
+
+            <p id="modal-desc" class="text-sm font-light leading-relaxed opacity-90">
+                Detalles del proyecto...
+            </p>
+
+            <div class="space-y-2">
+                <h4 class="text-xs font-bold uppercase tracking-wider opacity-60">Características Clave:</h4>
+                <ul id="modal-features" class="space-y-1 text-sm opacity-90 list-disc list-inside">
+                    <li>Característica 1</li>
+                </ul>
+            </div>
+
+            <div class="pt-4 flex items-center justify-end gap-3 border-t border-white/10">
+                <button id="modal-action-btn" class="glass-btn glass-btn-primary px-6 py-3 rounded-full text-xs font-bold flex items-center gap-2">
+                    <span>Entendido</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-white/10 py-8 relative z-10 text-center space-y-2">
+        <p class="text-xs font-light opacity-80">
+            © 2026 Gustavo Enrique Ramos Ruiz. Villahermosa, Tabasco, México.
+        </p>
+        <p class="text-xs text-pink-400 font-medium">
+            🐾 Es furry y tiene el mejor corazón ❤️
+        </p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        let selectedBase64Image = null;
+        let soundEnabled = true;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type = 'click') {
+            if (!soundEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                if (type === 'intro') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.4);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.4);
+                } else {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(700, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.08);
+                }
+            } catch (e) {}
+        }
+
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', () => playSound('click'));
+        });
+
+        const splashContainer = document.getElementById('welcome-splash');
+        const splashCard = document.getElementById('interactive-splash-card');
+
+        splashContainer.addEventListener('mousemove', (e) => {
+            if (splashContainer.classList.contains('zoom-out-splash')) return;
+            const rect = splashContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
+            const rotateX = (-y / (rect.height / 2)) * 18;
+            const rotateY = (x / (rect.width / 2)) * 18;
+            splashCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        splashContainer.addEventListener('mouseleave', () => {
+            if (splashContainer.classList.contains('zoom-out-splash')) return;
+            splashCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+
+        document.getElementById('enter-portfolio-btn').addEventListener('click', () => {
+            playSound('intro');
+            splashContainer.classList.add('zoom-out-splash');
+            setTimeout(() => {
+                splashContainer.style.display = 'none';
+            }, 750);
+        });
+
+        const themeBtn = document.getElementById('theme-toggle-btn');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            document.documentElement.classList.toggle('light');
+            const isDark = document.documentElement.classList.contains('dark');
+            showToast(isDark ? "Modo Oscuro" : "Modo Claro", "Estilo visual actualizado.");
+        });
+
+        document.getElementById('sound-toggle-btn').addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-toggle-btn');
+            btn.innerHTML = soundEnabled ? 
+                '<i data-lucide="volume-2" class="w-4 h-4 text-sky-400"></i>' : 
+                '<i data-lucide="volume-x" class="w-4 h-4 opacity-50"></i>';
+            lucide.createIcons();
+            showToast(soundEnabled ? "Sonido Activado" : "Sonido Silenciado", "");
+        });
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        const PALETTES = [
+            ['#0284c7', '#7c3aed', '#059669', '#e11d48'],
+            ['#0284c7', '#38bdf8', '#818cf8', '#c084fc'],
+            ['#059669', '#10b981', '#3b82f6', '#06b6d4'],
+            ['#d97706', '#e11d48', '#9333ea', '#2563eb']
+        ];
+
+        let currentPalette = [];
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 250 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class DynamicParticle {
+            constructor(x, y, radius, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.vx = (Math.random() - 0.5) * 1.8;
+                this.vy = (Math.random() - 0.5) * 1.8;
+            }
+
+            draw() {
+                ctx.beginPath();
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius
+                );
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) this.vx *= -1;
+                if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) this.vy *= -1;
+
+                if (mouse.x !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= (dx / distance) * force * 4;
+                        this.y -= (dy / distance) * force * 4;
+                    }
+                }
+            }
+        }
+
+        function initBackground() {
+            resizeCanvas();
+            particles = [];
+            const randomIndex = Math.floor(Math.random() * PALETTES.length);
+            currentPalette = PALETTES[randomIndex];
+
+            for (let i = 0; i < 6; i++) {
+                const radius = Math.random() * 260 + 200;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const color = currentPalette[i % currentPalette.length];
+                particles.push(new DynamicParticle(x, y, radius, color));
+            }
+        }
+
+        function animateBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = 'screen';
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.onload = function() {
+            initBackground();
+            animateBackground();
+        };
+
+        document.getElementById('regen-bg-btn').addEventListener('click', () => {
+            initBackground();
+            showToast("Fondo Dinámico Re-generado", "Combinación cromática única creada.");
+        });
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-message').textContent = message;
+
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+
+        function copyToClipboard(text, successMessage) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("¡Copiado!", successMessage);
+        }
+
+        document.getElementById('copy-email-btn').addEventListener('click', () => {
+            copyToClipboard("evelynasgo@gmail.com", "evelynasgo@gmail.com guardado en portapapeles.");
+        });
+
+        document.getElementById('copy-discord-btn').addEventListener('click', () => {
+            copyToClipboard("gustavo125930", "gustavo125930 guardado en portapapeles.");
+        });
+
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const modeTextBtn = document.getElementById('mode-text-btn');
+        const modeVisionBtn = document.getElementById('mode-vision-btn');
+        const panelTextMode = document.getElementById('panel-text-mode');
+        const panelVisionMode = document.getElementById('panel-vision-mode');
+
+        modeTextBtn.addEventListener('click', () => {
+            modeTextBtn.className = "px-5 py-3 rounded-2xl text-xs font-bold bg-sky-500 text-white flex items-center gap-2 shadow-lg transition-all";
+            modeVisionBtn.className = "px-5 py-3 rounded-2xl text-xs font-bold bg-white/10 opacity-70 hover:opacity-100 flex items-center gap-2 transition-all";
+            panelTextMode.classList.remove('hidden');
+            panelVisionMode.classList.add('hidden');
+        });
+
+        modeVisionBtn.addEventListener('click', () => {
+            modeVisionBtn.className = "px-5 py-3 rounded-2xl text-xs font-bold bg-sky-500 text-white flex items-center gap-2 shadow-lg transition-all";
+            modeTextBtn.className = "px-5 py-3 rounded-2xl text-xs font-bold bg-white/10 opacity-70 hover:opacity-100 flex items-center gap-2 transition-all";
+            panelVisionMode.classList.remove('hidden');
+            panelTextMode.classList.add('hidden');
+        });
+
+        const fileInput = document.getElementById('vision-file-input');
+        const previewContainer = document.getElementById('image-preview-container');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    selectedBase64Image = evt.target.result;
+                    previewContainer.innerHTML = `<img src="${selectedBase64Image}" class="w-full h-full object-cover rounded-3xl" alt="Preview">`;
+                    previewContainer.classList.remove('opacity-60');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        /* --- CONSUMO SEGURO VÍA ENDPOINT BACKEND (/api/groq) --- */
+        document.getElementById('translate-idea-btn').addEventListener('click', async () => {
+            const val = document.getElementById('idea-input').value.trim();
+            if (!val) {
+                showToast("Escribe una idea", "Ingresa una propuesta o concepto.");
+                return;
+            }
+
+            const loader = document.getElementById('ai-loader');
+            const resultBox = document.getElementById('idea-result');
+            document.getElementById('loader-text').textContent = "Conectando al servidor... Generando arquitectura de software...";
+
+            loader.classList.remove('hidden');
+            resultBox.classList.add('hidden');
+
+            try {
+                const response = await fetch("/api/groq", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "Eres el motor de IA del portafolio de Gustavo Enrique Ramos Ruiz (14 años, programador experto en Rust, Bare-Metal, C, C++, Python, Flutter e IA). Cuando te envíen una idea, genera: 1. Stack Sugerido, 2. Arquitectura Clave y 3. Prompt Maestro en formato limpio."
+                            },
+                            {
+                                role: "user",
+                                content: `Abstrae esta idea en arquitectura técnica: "${val}"`
+                            }
+                        ],
+                        temperature: 0.6,
+                        max_tokens: 800
+                    })
+                });
+
+                if (!response.ok) throw new Error("Error en conexión con el servidor Backend");
+
+                const data = await response.json();
+                const aiText = data.choices[0].message.content;
+
+                document.getElementById('out-idea').textContent = val;
+                document.getElementById('model-badge').textContent = "Model: llama-3.3-70b-versatile";
+                document.getElementById('out-prompt').textContent = aiText;
+
+                loader.classList.add('hidden');
+                resultBox.classList.remove('hidden');
+                showToast("¡Procesado con Éxito!", "Respuesta de IA generada vía túnel seguro.");
+
+            } catch (err) {
+                loader.classList.add('hidden');
+                showToast("Error de Servidor", "Comprueba la configuración de tu endpoint o variables.");
+                console.error(err);
+            }
+        });
+
+        document.getElementById('process-vision-btn').addEventListener('click', async () => {
+            if (!selectedBase64Image) {
+                showToast("Selecciona una imagen", "Por favor selecciona una imagen para analizar.");
+                return;
+            }
+
+            const promptText = document.getElementById('vision-prompt-input').value.trim() || 
+                "Analiza en detalle esta imagen. Explica qué contiene, qué código, interfaz o diagrama representa y dame recomendaciones técnicas como si fueras un programador experto.";
+
+            const loader = document.getElementById('ai-loader');
+            const resultBox = document.getElementById('idea-result');
+            document.getElementById('loader-text').textContent = "Analizando píxeles con Groq LPU Vision (Llama 3.2 11B Vision)...";
+
+            loader.classList.remove('hidden');
+            resultBox.classList.add('hidden');
+
+            try {
+                const response = await fetch("/api/groq", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama-3.2-11b-vision-preview",
+                        messages: [
+                            {
+                                role: "user",
+                                content: [
+                                    { type: "text", text: promptText },
+                                    { type: "image_url", image_url: { url: selectedBase64Image } }
+                                ]
+                            }
+                        ],
+                        temperature: 0.5,
+                        max_tokens: 900
+                    })
+                });
+
+                if (!response.ok) throw new Error("Error en servidor de visión");
+
+                const data = await response.json();
+                const aiVisionText = data.choices[0].message.content;
+
+                document.getElementById('out-idea').textContent = promptText;
+                document.getElementById('model-badge').textContent = "Model: llama-3.2-11b-vision-preview";
+                document.getElementById('out-prompt').textContent = aiVisionText;
+
+                loader.classList.add('hidden');
+                resultBox.classList.remove('hidden');
+                showToast("¡Análisis de Visión Completado!", "La imagen ha sido analizada exitosamente por Groq.");
+
+            } catch (err) {
+                loader.classList.add('hidden');
+                showToast("Error en Módulo Visión", "Verifica el formato de la imagen.");
+                console.error(err);
+            }
+        });
+
+        const termInput = document.getElementById('terminal-input');
+        const termBody = document.getElementById('terminal-body');
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = termInput.value.trim().toLowerCase();
+                termInput.value = '';
+
+                const cmdLine = document.createElement('p');
+                cmdLine.innerHTML = `<span class="text-pink-400 font-bold">gustavo@kernel:~$</span> <span class="text-white">${cmd}</span>`;
+                termBody.appendChild(cmdLine);
+
+                const resLine = document.createElement('p');
+                resLine.className = 'text-slate-300 ml-2';
+
+                switch(cmd) {
+                    case 'help':
+                        resLine.innerHTML = `Comandos disponibles:<br>
+- <span class="text-amber-400 font-bold">whoami</span>: Perfil del desarrollador.<br>
+- <span class="text-amber-400 font-bold">projects</span>: Proyectos insignia.<br>
+- <span class="text-amber-400 font-bold">languages</span>: Nivel de idiomas.<br>
+- <span class="text-amber-400 font-bold">furry</span>: Dato curioso.<br>
+- <span class="text-amber-400 font-bold">clear</span>: Limpiar pantalla.`;
+                        break;
+                    case 'whoami':
+                        resLine.innerHTML = "Gustavo Enrique Ramos Ruiz (14 años) | Villahermosa, México | Creador de Kernel, Redes e IA";
+                        break;
+                    case 'projects':
+                        resLine.innerHTML = "1. Local AI Hub (Flutter Android/Windows)\n2. Modelo IA Propio\n3. Kernel de SO (Rust/C)\n4. Red de Internet Propia (C++)";
+                        break;
+                    case 'languages':
+                        resLine.innerHTML = "Español: Nativo (100%) | Inglés: En Aprendizaje (~50%) | Francés: Básico (20%)";
+                        break;
+                    case 'furry':
+                        resLine.innerHTML = "🐾 Dato curioso: Es furry y tiene el mejor corazón ❤️";
+                        break;
+                    case 'clear':
+                        termBody.innerHTML = '';
+                        return;
+                    case '':
+                        return;
+                    default:
+                        resLine.innerHTML = `<span class="text-red-400">Comando no válido: '${cmd}'. Prueba '<span class="text-amber-400 font-bold">help</span>'.</span>`;
+                }
+
+                termBody.appendChild(resLine);
+                termBody.scrollTop = termBody.scrollHeight;
+            }
+        });
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-sky-500', 'text-white');
+                    b.classList.add('opacity-70');
+                });
+                btn.classList.add('active', 'bg-sky-500', 'text-white');
+                btn.classList.remove('opacity-70');
+
+                const filter = btn.dataset.filter;
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        const modalData = {
+            "1": {
+                title: "Local AI Hub (Android & Windows)",
+                tag: "IA & Flutter · Casi Terminado",
+                desc: "Aplicación multiplataforma en Flutter que actúa como un hub local para cargar e inferir modelos de IA en Windows y Android sin servidores externos.",
+                features: ["Sustentado en ejecución offline", "Interfaz estilo Liquid Glass", "Gestión optimizada de memoria"]
+            },
+            "2": {
+                title: "Modelo de IA Personalizado",
+                tag: "IA & Machine Learning",
+                desc: "Entrenamiento de un modelo propio optimizado para compresión de datos y procesamiento de ideas en baja potencia.",
+                features: ["Fine-tuning optimizado", "Ejecución local en baja potencia", "Adaptabilidad a intenciones de usuario"]
+            },
+            "3": {
+                title: "Kernel de Sistema Operativo",
+                tag: "Low-Level Systems · En Desarrollo",
+                desc: "Núcleo de sistema propio desarrollado desde cero en Rust, C y C++ Bare-Metal con control directo de interrupciones.",
+                features: ["Código Bare-Metal nativo", "Gestión de memoria propia", "Arquitectura ligera"]
+            },
+            "4": {
+                title: "Red de Internet Propia",
+                tag: "Networking · En Desarrollo",
+                desc: "Protocolo y arquitectura de red propia para transmisión de datos cifrados de manera independiente.",
+                features: ["Cifrado extremo a extremo", "Protocolo propio en C++", "Transmisión eficiente de paquetes"]
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const data = modalData[id];
+                if (data) {
+                    document.getElementById('modal-title').textContent = data.title;
+                    document.getElementById('modal-tag').textContent = data.tag;
+                    document.getElementById('modal-desc').textContent = data.desc;
+
+                    const list = document.getElementById('modal-features');
+                    list.innerHTML = '';
+                    data.features.forEach(f => {
+                        const li = document.createElement('li');
+                        li.textContent = f;
+                        list.appendChild(li);
+                    });
+
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.children[0].classList.remove('scale-95');
+                    modal.children[0].classList.add('scale-100');
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.children[0].classList.remove('scale-100');
+            modal.children[0].classList.add('scale-95');
+        });
+
+        document.getElementById('modal-action-btn').addEventListener('click', () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast("¡Mensaje Enviado!", "Gracias por comunicarte, Gustavo te responderá pronto.");
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
